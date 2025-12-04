@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avaliações</title>
+
+    <link rel="stylesheet" href="../Styles/evaluations.css">
+    <link rel="stylesheet" href="../Styles/sideBar.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="logo">
+                <div class="logo-text">
+                    <div class="app-title">PerformanceHub</div>
+                    <div class="app-sub">Gestão de Desempenho</div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="nav">
+            <a href="dashboard.html" class="nav-item">Dashboard</a>
+            <a href="employees.html"class="nav-item">Funcionários</a>
+            <a href="goals.html" class="nav-item ">Metas</a>
+            <a href="#" class="nav-item active">Avaliações</a>
+            <a href="feedbacks.html" class="nav-item">Feedbacks</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="user">
+                <div class="avatar">J</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Usuário</div>
+                    <div class="user-email" id="userEmail">email@exemplo.com</div>
+                </div>
+            </div>
+            <button id="logoutBtn" class="logout">Sair</button>
+        </div>
+    </aside>
+
+     <main class="content">
+
+        <header class="header">
+            <div>
+                <h1 class="page-title">Avaliações</h1>
+                <p class="page-sub">Registre e acompanhe avaliações de desempenho</p>
+            </div>
+            <button id="openModalBtn" class="btn-primary">Nova Avaliação</button>
+        </header>
+
+        <section id="evaluationsList" class="list"></section>
+     </main>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2>Registrar Avaliação</h2>
+
+            <label>Funcionário</label>
+            <input type="text" id="employeeName" placeholder="Nome do funcionário">
+
+            <label>Tipo</label>
+            <select id="evaluationType">
+                <option value="mensal">Mensal</option>
+                <option value="trimestral">Trimestral</option>
+                <option value="anual">Anual</option>
+            </select>
+
+            <label>Pontuação (0 a 100)</label>
+            <input type="number" id="score" min="0" max="100">
+
+            <label>Avaliador</label>
+            <input type="text" id="evaluatorName" placeholder="Nome do avaliador">
+
+            <label>Comentários</label>
+            <textarea id="comments" placeholder="Observações..."></textarea>
+
+            <button id="saveEvaluationBtn" class="save-btn">Salvar</button>
+            <button id="closeModalBtn" class="close-btn">Cancelar</button>
+        </div>
+    </div>
+
+    <script src="../Scripts/evaluations.js"></script>
+</body>
+</html>

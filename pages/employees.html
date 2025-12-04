@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Funcionários</title>
+    <link rel="stylesheet" href="../Styles/employees.css" />
+     <link rel="stylesheet" href="../Styles/sideBar.css" />
+</head>
+<body>
+    <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="logo">
+        <div class="logo-text">
+          <div class="app-title">PerformanceHub</div>
+          <div class="app-sub">Gestão de Desempenho</div>
+        </div>
+      </div>
+    </div>
+
+   
+    <nav class="nav">
+            <a href="dashboard.html" class="nav-item ">Dashboard</a>
+            <a href="#"class="nav-item active">Funcionários</a>
+            <a href="goals.html" class="nav-item">Metas</a>
+            <a href="evaluations.html" class="nav-item">Avaliações</a>
+            <a href="feedbacks.html" class="nav-item">Feedbacks</a>
+        </nav>
+
+    <div class="sidebar-bottom">
+      <div class="user">
+        <div class="avatar">J</div>
+        <div class="user-info">
+          <div class="user-name" id="userName">Usuário</div>
+          <div class="user-email" id="userEmail">email@exemplo.com</div>
+        </div>
+      </div>
+      <button id="logoutBtn" class="logout">Sair</button>
+    </div>
+  </aside>
+
+    <main class="content">
+
+        <header class="header">
+            <div>
+                <h1 class="page-title">Funcionários</h1>
+                <p class="page-sub">Gerencie sua equipe</p>
+            </div>
+
+            <button id="openModal" class="btn-primary">
+                Novo Funcionário
+            </button>
+        </header>
+
+        <div class="search-area">
+            <input id="searchInput" type="text" placeholder="Buscar por nome, cargo ou departamento..." />
+        </div>
+
+        <div id="employeesGrid" class="employees-grid"></div>
+
+        <div id="emptyState" class="empty hidden">
+            <p>Nenhum funcionário encontrado.</p>
+            <span>Tente ajustar os filtros de busca.</span>
+        </div>
+
+    </main>
+
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Adicionar Funcionário</h2>
+
+            <label>Nome completo</label>
+            <input id="empName" type="text" placeholder="Nome do funcionário" />
+
+            <label>Email</label>
+            <input id="empEmail" type="email" placeholder="email@empresa.com" />
+
+            <label>Cargo</label>
+            <input id="empPosition" type="text" placeholder="Ex: Desenvolvedor Senior" />
+
+            <label>Departamento</label>
+            <select id="empDepartment">
+                <option selected disabled>Selecione...</option>
+                <option>Tecnologia</option>
+                <option>Design</option>
+                <option>Marketing</option>
+                <option>Recursos Humanos</option>
+                <option>Operações</option>
+                <option>Financeiro</option>
+            </select>
+
+            <label>Data de admissão</label>
+            <input id="empHireDate" type="date" />
+
+            <button id="saveEmployee" class="btn-primary">Adicionar</button>
+            <button id="closeModal" class="btn-secondary">Cancelar</button>
+        </div>
+    </div>
+
+    <script src="../Scripts/employees.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedbacks</title>
+
+    <link rel="stylesheet" href="../Styles/feedbacks.css" />
+    <link rel="stylesheet" href="../Styles/sideBar.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="logo">
+          <div class="logo-text">
+            <div class="app-title">PerformanceHub</div>
+            <div class="app-sub">Gestão de Desempenho</div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="dashboard.html" class="nav-item">Dashboard</a>
+        <a href="employees.html" class="nav-item">Funcionários</a>
+        <a href="goals.html" class="nav-item">Metas</a>
+        <a href="evaluations.html" class="nav-item">Avaliações</a>
+        <a href="#" class="nav-item active">Feedbacks</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="user">
+          <div class="avatar">J</div>
+          <div class="user-info">
+            <div class="user-name" id="userName">Usuário</div>
+            <div class="user-email" id="userEmail">email@exemplo.com</div>
+          </div>
+        </div>
+        <button id="logoutBtn" class="logout">Sair</button>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="header">
+        <div>
+          <h1 class="page-title">Feedbacks</h1>
+          <p class="page-sub">Registre feedbacks periódicos para a equipe</p>
+        </div>
+        <button id="openModalBtn" class="btn-primary">Novo Feedback</button>
+      </header>
+
+      <div id="modal" class="modal hidden">
+        <div class="modal-content">
+          <h2>Novo Feedback</h2>
+
+          <label>Funcionário</label>
+          <input
+            id="fbEmployee"
+            type="text"
+            placeholder="Nome do funcionário"
+          />
+
+          <label>Seu Nome</label>
+          <input id="fbAuthor" type="text" placeholder="Quem está enviando" />
+
+          <label>Tipo</label>
+          <select id="fbType">
+            <option value="" selected disabled>Selecione...</option>
+            <option value="positive">Positivo</option>
+            <option value="constructive">Construtivo</option>
+            <option value="neutral">Neutro</option>
+          </select>
+
+          <label>Feedback</label>
+          <textarea
+            id="fbContent"
+            rows="4"
+            placeholder="Escreva o feedback"
+          ></textarea>
+
+          <button id="saveFeedback" class="btn-primary">Enviar</button>
+          <button id="closeModalBtn" class="btn-secondary">Cancelar</button>
+        </div>
+      </div>
+
+      <div id="feedbackList" class="feedbacks-list"></div>
+    </main>
+
+    <script src="../Scripts/feedbacks.js"></script>
+  </body>
+</html>

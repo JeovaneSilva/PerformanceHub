@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PerformanceHub — Dashboard</title>
+  <link rel="stylesheet" href="../Styles/dashboard.css" />
+  <link rel="stylesheet" href="../Styles/sideBar.css" />
+</head>
+<body>
+  <div>
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="logo">
+        <div class="logo-text">
+          <div class="app-title">PerformanceHub</div>
+          <div class="app-sub">Gestão de Desempenho</div>
+        </div>
+      </div>
+    </div>
+
+   
+    <nav class="nav">
+            <a href="#" class="nav-item active">Dashboard</a>
+            <a href="employees.html"class="nav-item ">Funcionários</a>
+            <a href="goals.html" class="nav-item">Metas</a>
+            <a href="evaluations.html" class="nav-item">Avaliações</a>
+            <a href="feedbacks.html" class="nav-item">Feedbacks</a>
+        </nav>
+
+    <div class="sidebar-bottom">
+      <div class="user">
+        <div class="avatar">J</div>
+        <div class="user-info">
+          <div class="user-name" id="userName">Usuário</div>
+          <div class="user-email" id="userEmail">email@exemplo.com</div>
+        </div>
+      </div>
+      <button id="logoutBtn" class="logout">Sair</button>
+    </div>
+  </aside>
+
+
+  <main class="main">
+    <header class="header">
+      <div>
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-sub">Visão geral do desempenho da equipe</p>
+      </div>
+    </header>
+
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-title-black">Total de Funcionários</div>
+        <div class="stat-value-black" id="totalEmployees">0</div>
+        <div class="stat-trend-black">↑ 12% vs mês anterior</div>
+      </div>
+
+      <div class="stat-card primary">
+        <div class="stat-title">Desempenho Médio</div>
+        <div class="stat-value" id="avgPerformance">0%</div>
+        <div class="stat-trend">↑ 5% vs mês anterior</div>
+      </div>
+
+      <div class="stat-card success">
+        <div class="stat-title">Metas Concluídas</div>
+        <div class="stat-value" id="goalsCompleted">0</div>
+        <div class="stat-trend">↑ 8% vs mês anterior</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-title-black">Avaliações Pendentes</div>
+        <div class="stat-value-black" id="pendingEvaluations">0</div>
+        <div class="stat-trend negative">↓ 2% vs mês anterior</div>
+      </div>
+    </section>
+
+    <section class="charts-row">
+      <div class="chart-card" id="perfChartCard">
+        <h3>Evolução do Desempenho</h3>
+        <div class="chart-area" id="lineChart"></div>
+      </div>
+
+      <div class="chart-card" id="deptChartCard">
+        <h3>Desempenho por Departamento</h3>
+        <div class="chart-area" id="barChart"></div>
+      </div>
+    </section>
+
+    <section class="lower-row">
+      <div class="recent-card" id="recentActivities">
+        <h3>Atividades Recentes</h3>
+        <div id="activitiesList"></div>
+      </div>
+
+      <div class="top-card" id="topPerformers">
+        <h3>Top Performers</h3>
+        <div id="performersList"></div>
+      </div>
+    </section>
+
+  </main>
+  </div>
+
+  <script src="../Scripts/dashboard.js"></script>
+</body>
+</html>

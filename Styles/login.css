@@ -1,0 +1,228 @@
+/* -------------------------------------------------------
+   BASE & VARIÁVEIS
+------------------------------------------------------- */
+:root {
+  --background: 210 20% 98%;
+  --foreground: 215 25% 15%;
+  --card: 0 0% 100%;
+  --card-foreground: 215 25% 15%;
+  --primary: 199 89% 28%;
+  --primary-foreground: 0 0% 100%;
+  --border: 214 20% 88%;
+  --radius: 0.75rem;
+  --gradient-primary: linear-gradient(180deg, #005a8d 0%, #007ab8 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* -------------------------------------------------------
+   LAYOUT BASE
+------------------------------------------------------- */
+.root-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* -------------------------------------------------------
+   LEFT PANEL (AZUL)
+------------------------------------------------------- */
+.left-panel {
+  flex: 1;
+  background: var(--gradient-primary);
+  color: #fff;
+  padding: 4rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-inner {
+  max-width: 440px;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.brand-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-row svg {
+  color: white;
+}
+
+/* Título do lado esquerdo */
+.left-heading {
+  font-size: 2.3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 2rem 0 1rem;
+  color: #fff;
+}
+
+.left-sub {
+  font-size: 1rem;
+  line-height: 1.5;
+  opacity: 0.9;
+  margin-bottom: 2.5rem;
+}
+
+/* Cards de estatística */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 1.2rem;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+.stat-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+/* -------------------------------------------------------
+   RIGHT PANEL (LOGIN)
+------------------------------------------------------- */
+.right-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.welcome {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: hsl(var(--foreground));
+}
+
+.muted {
+  color: #6a6a6a;
+  font-size: 0.95rem;
+}
+
+/* -------------------------------------------------------
+   FORM INPUTS
+------------------------------------------------------- */
+.field {
+  margin-bottom: 1.2rem;
+}
+
+.label {
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  display: block;
+  font-weight: 500;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  background: hsl(var(--card));
+}
+
+.input-wrapper svg {
+  width: 18px;
+  margin-right: 0.7rem;
+  opacity: 0.6;
+}
+
+input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  background: transparent;
+}
+
+/* -------------------------------------------------------
+   BOTÃO
+------------------------------------------------------- */
+.btn {
+  width: 100%;
+  padding: 0.85rem;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+}
+
+.gradient {
+  background: linear-gradient(90deg, #006a9e, #0084c7);
+}
+
+.btn-icon {
+  width: 20px;
+  color: white;
+}
+
+/* Link de registrar */
+.register {
+  margin-top: 1.3rem;
+  text-align: center;
+}
+
+.link {
+  color: #0068c9;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* -------------------------------------------------------
+   RESPONSIVO
+------------------------------------------------------- */
+@media (max-width: 900px) {
+  .left-panel {
+    display: none;
+  }
+}

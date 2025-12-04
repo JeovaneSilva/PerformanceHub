@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Metas</title>
+    <link rel="stylesheet" href="../Styles/goals.css" />
+    <link rel="stylesheet" href="../Styles/sideBar.css" />
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="logo">
+                <div class="logo-text">
+                    <div class="app-title">PerformanceHub</div>
+                    <div class="app-sub">Gestão de Desempenho</div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="nav">
+            <a href="dashboard.html" class="nav-item">Dashboard</a>
+            <a href="employees.html"class="nav-item">Funcionários</a>
+            <a href="#" class="nav-item active">Metas</a>
+            <a href="evaluations.html" class="nav-item">Avaliações</a>
+            <a href="feedbacks.html" class="nav-item">Feedbacks</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="user">
+                <div class="avatar">J</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Usuário</div>
+                    <div class="user-email" id="userEmail">email@exemplo.com</div>
+                </div>
+            </div>
+            <button id="logoutBtn" class="logout">Sair</button>
+        </div>
+    </aside>
+
+    <main class="content">
+
+        <header class="header">
+            <div>
+                <h1 class="page-title">Metas</h1>
+                <p class="page-sub">Acompanhe as metas da equipe</p>
+            </div>
+            <button id="openModal" class="btn-primary">Nova Meta</button>
+        </header>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Todas</button>
+            <button class="filter-btn" data-filter="pending">Pendente</button>
+            <button class="filter-btn" data-filter="in_progress">Em Andamento</button>
+            <button class="filter-btn" data-filter="completed">Concluída</button>
+            <button class="filter-btn" data-filter="cancelled">Cancelada</button>
+        </div>
+
+        <div id="goalsList" class="goals-list"></div>
+
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <h2>Criar Nova Meta</h2>
+
+                <label>Funcionário</label>
+                <select id="employeeSelect">
+                    <option value="">Selecione</option>
+                    <option value="1">João Santos</option>
+                    <option value="2">Maria Oliveira</option>
+                    <option value="3">Carlos Lima</option>
+                </select>
+
+                <label>Título da Meta</label>
+                <input id="goalTitle" type="text" placeholder="Ex: Aumentar vendas em 20%">
+
+                <label>Descrição</label>
+                <textarea id="goalDesc" placeholder="Descrição..."></textarea>
+
+                <label>Data limite</label>
+                <input id="goalDate" type="date">
+
+                <button id="saveGoal" class="btn-primary w-full">Criar Meta</button>
+                <button id="closeModal" class="btn-secondary w-full mt-1">Cancelar</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="../Scripts/goals.js"></script>
+</body>
+</html>

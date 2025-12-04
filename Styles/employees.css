@@ -1,0 +1,185 @@
+/* ====== LAYOUT ====== */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fa;
+    display: flex;
+}
+
+
+
+/* ====== MAIN CONTENT ====== */
+.content {
+    flex: 1;
+    padding: 40px;
+    margin-left: 260px;
+    padding: 28px 36px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-primary {
+    padding: 12px 20px;
+    background: linear-gradient(90deg, #0284c7, #0ea5e9);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.search-area {
+    margin-top: 20px;
+    max-width: 380px;
+}
+
+.search-area input {
+    width: 100%;
+    padding: 14px 15px;
+    border-radius: 10px;
+    border: 1px solid #d3d8df;
+}
+
+/* ====== EMPLOYEE CARDS ====== */
+.employees-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.initials {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(90deg, #0284c7, #0ea5e9);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.score {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.score.green {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.score.blue {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.score.yellow {
+    background: #fef9c3;
+    color: #ca8a04;
+}
+
+.score.red {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.info {
+    margin-top: 20px;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+    margin-bottom: 6px;
+}
+
+/* Performance bar */
+.progress-area {
+    margin-top: 15px;
+}
+
+.progress {
+    width: 100%;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 6px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0284c7, #0ea5e9);
+    border-radius: 6px;
+}
+
+/* Empty state */
+.empty {
+    text-align: center;
+    margin-top: 40px;
+    color: #6b7280;
+}
+
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;         /* ← precisa ser FLEX para alinhar ao centro */
+    justify-content: center;
+    align-items: center;
+
+    /* o modal só deve sumir quando tiver .hidden */
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.modal-content input,
+.modal-content select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+}
