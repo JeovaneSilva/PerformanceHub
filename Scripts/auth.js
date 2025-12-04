@@ -82,7 +82,7 @@
       if (success) {
         showToast('Login realizado com sucesso!', 'success');
         setTimeout(() => {
-          window.location.href = 'dashboard.html';
+          window.location.href = './Pages/dashboard.html';
         }, 700);
       } else {
         showToast('Credenciais inválidas', 'error');
