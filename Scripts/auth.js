@@ -1,8 +1,7 @@
-
 (() => {
   const form = document.getElementById('loginForm');
-  const emailInput = document.getElementById('email');
-  const passwordInput = document.getElementById('password');
+  const emailInput = document.getElementById('login') || document.getElementById('email'); 
+  const passwordInput = document.getElementById('senha') || document.getElementById('password');
   const submitBtn = document.getElementById('submitBtn');
   const btnText = document.getElementById('btnText');
   const toastRoot = document.getElementById('toast');
@@ -10,6 +9,20 @@
   if (!form || !emailInput || !passwordInput || !submitBtn || !btnText || !toastRoot) {
     console.warn('auth.js: elementos não encontrados. Verifique IDs no HTML.');
     return;
+  }
+
+  const togglePassword = document.getElementById('togglePassword');
+  if (togglePassword && passwordInput) {
+    togglePassword.addEventListener('click', function () {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      
+      if (type === 'text') {
+        this.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>';
+      } else {
+        this.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>';
+      }
+    });
   }
 
   function showToast(message, type = 'info', duration = 3000) {
@@ -24,24 +37,6 @@
       t.classList.remove('toast--visible');
       setTimeout(() => toastRoot.removeChild(t), 300);
     }, duration);
-  }
-
-  function loginSimulator(email, password) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        if (email && password.length >= 6) {
-          const user = {
-            id: '1',
-            name: email.split('@')[0],
-            email,
-          };
-          localStorage.setItem('user', JSON.stringify(user));
-          resolve(true);
-        } else {
-          resolve(false);
-        }
-      }, 900);
-    });
   }
 
   function setLoading(isLoading) {
@@ -68,6 +63,33 @@
     return true;
   }
 
+
+  function realizarLoginPHP(usuario, senha) {
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        type: 'POST',
+        url: '../scripts/login_validar.php',
+        data: {
+          pLogin: usuario, 
+          pSenha: senha 
+        },
+        success: function(data) {
+          let vRetorno = data.replace(/[\[\]]/g, '').trim();
+          
+          if (vRetorno === "1") {
+            resolve(true); 
+          } else {
+            resolve(false);
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error("Erro no AJAX: ", error);
+          reject(error);
+        }
+      });
+    });
+  }
+
   form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
 
@@ -78,18 +100,20 @@
 
     try {
       setLoading(true);
-      const success = await loginSimulator(email, password);
+      const success = await realizarLoginPHP(email, password);
+      
       if (success) {
         showToast('Login realizado com sucesso!', 'success');
+        
         setTimeout(() => {
-          window.location.href = './Pages/dashboard.html';
+          window.location.href = '../pages/dashboard.html';
         }, 700);
       } else {
-        showToast('Credenciais inválidas', 'error');
+        showToast('Credenciais inválidas. Tente novamente.', 'error');
+        passwordInput.value = '';
       }
     } catch (err) {
-      console.error(err);
-      showToast('Erro ao tentar logar', 'error');
+      showToast('Erro de comunicação com o servidor', 'error');
     } finally {
       setLoading(false);
     }

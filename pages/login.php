@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PerformanceHub — Login</title>
+  <link rel="stylesheet" href="../styles/login.css" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+  <div class="min-h-screen flex root-container">
+    <aside class="left-panel">
+      <div class="left-inner">
+        <h2 class="left-heading">Impulsione o desempenho da sua equipe</h2>
+        <p class="left-sub">
+          Acompanhe metas, avaliações e feedbacks em uma única plataforma intuitiva e poderosa.
+        </p>
+        <div class="stats-grid" aria-hidden>
+          <div class="stat-card">
+            <p class="stat-value">10k+</p>
+            <p class="stat-label">Metas Gerenciadas</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-value">500+</p>
+            <p class="stat-label">Empresas Ativas</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-value">25k+</p>
+            <p class="stat-label">Avaliações/Mês</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-value">98%</p>
+            <p class="stat-label">Satisfação</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="right-panel">
+      <div class="card">
+        <div class="mobile-brand">
+          <div class="mobile-icon"></div>
+          <div>
+            <h1 class="brand-title small">PerformanceHub</h1>
+          </div>
+        </div>
+
+        <div class="text-center header">
+          <h2 class="welcome">Bem-vindo de volta</h2>
+          <p class="muted">Entre com suas credenciais para acessar</p>
+        </div>
+        <form id="loginForm" class="form" autocomplete="off" novalidate>
+          <div class="field">
+            <label for="login" class="label">E-mail</label>
+            <div class="input-wrapper" style="position: relative;">
+              <svg class="icon-left" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M3 8.5v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 6H3v2.5l9 6 9-6V6z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <input id="login" name="login" type="email" placeholder="seu@email.com" autocomplete="off" required />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="senha" class="label">Senha</label>
+            <div class="input-wrapper" style="position: relative; display: flex; align-items: center;">
+              <svg class="icon-left" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <rect x="3" y="11" width="18" height="10" rx="2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <input id="senha" name="senha" type="password" placeholder="••••••••" autocomplete="new-password" required style="width: 100%;" />
+              
+              <svg id="togglePassword" viewBox="0 0 24 24" fill="none" style="position: absolute; right: 15px; cursor: pointer; width: 20px; height: 20px; color: #666;">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <button id="submitBtn" class="btn gradient" type="submit">
+            <span id="btnText">Entrar</span>
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path d="M5 12h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+
+        <p class="register">
+          Não tem uma conta?
+          <a href="register.php" class="link">Criar conta</a>
+        </p>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="../scripts/auth.js"></script>
+
+</body>
+</html>

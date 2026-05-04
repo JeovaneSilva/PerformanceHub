@@ -4,13 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PerformanceHub — Criar conta</title>
-  <link rel="stylesheet" href="../Styles/register.css" />
+  <link rel="stylesheet" href="../styles/register.css" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 
 <body>
   <div class="container">
 
-    <!-- LEFT SIDE -->
     <div class="left">
       <div class="left-inner">
 
@@ -19,70 +19,79 @@
           <p class="subtitle">Comece a gerenciar sua equipe hoje</p>
         </div>
 
-        <form id="registerForm" class="form" novalidate>
+       <form id="registerForm" class="form" autocomplete="off" novalidate>
 
           <div class="field">
             <label for="name">Nome completo</label>
             <div class="input-wrapper">
-              <svg class="icon-left" viewBox="0 0 24 24">
+              <svg class="icon-left" viewBox="0 0 24 24" fill="none">
                 <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5z" stroke="currentColor" stroke-width="1.4"/>
                 <path d="M3 21a9 9 0 0 1 18 0" stroke="currentColor" stroke-width="1.4"/>
               </svg>
-              <input id="name" type="text" placeholder="Seu nome" />
+              <input id="name" type="text" placeholder="Seu nome" autocomplete="off" />
             </div>
           </div>
 
           <div class="field">
             <label for="email">E-mail</label>
             <div class="input-wrapper">
-              <svg class="icon-left" viewBox="0 0 24 24">
+              <svg class="icon-left" viewBox="0 0 24 24" fill="none">
                 <path d="M3 8.5v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="1.4"/>
                 <path d="M21 6H3v2.5l9 6 9-6V6z" stroke="currentColor" stroke-width="1.4"/>
               </svg>
-              <input id="email" type="email" placeholder="seu@email.com" />
+              <input id="email" type="email" placeholder="seu@email.com" autocomplete="off" />
             </div>
           </div>
 
           <div class="field">
             <label for="password">Senha</label>
-            <div class="input-wrapper">
-              <svg class="icon-left" viewBox="0 0 24 24">
+            <div class="input-wrapper" style="position: relative; display: flex; align-items: center;">
+              <svg class="icon-left" viewBox="0 0 24 24" fill="none">
                 <rect x="3" y="11" width="18" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/>
                 <path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-width="1.4"/>
               </svg>
-              <input id="password" type="password" placeholder="••••••••" />
+              <input id="password" type="password" placeholder="••••••••" autocomplete="new-password" style="width: 100%;" />
+              
+              <svg id="toggleRegPassword" viewBox="0 0 24 24" fill="none" style="position: absolute; right: 15px; cursor: pointer; width: 20px; height: 20px; color: #666;">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </div>
           </div>
 
           <div class="field">
             <label for="confirmPassword">Confirmar senha</label>
-            <div class="input-wrapper">
-              <svg class="icon-left" viewBox="0 0 24 24">
+            <div class="input-wrapper" style="position: relative; display: flex; align-items: center;">
+              <svg class="icon-left" viewBox="0 0 24 24" fill="none">
                 <rect x="3" y="11" width="18" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/>
                 <path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-width="1.4"/>
               </svg>
-              <input id="confirmPassword" type="password" placeholder="••••••••" />
+              <input id="confirmPassword" type="password" placeholder="••••••••" autocomplete="new-password" style="width: 100%;" />
+              
+              <svg id="toggleRegConfirm" viewBox="0 0 24 24" fill="none" style="position: absolute; right: 15px; cursor: pointer; width: 20px; height: 20px; color: #666;">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </div>
           </div>
 
           <button id="submitBtn" type="submit" class="btn gradient">
             Criar conta
-            <svg class="btn-icon" viewBox="0 0 24 24">
-              <path d="M5 12h14" stroke="currentColor" stroke-width="1.6"/>
-              <path d="M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.6"/>
+           <svg class="btn-icon" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path d="M5 12h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
         </form>
 
         <p class="signin">
           Já tem uma conta?
-          <a href="../index.html">Entrar</a>
+          <a href="./login.php">Entrar</a>
         </p>
 
       </div>
     </div>
 
-    <!-- RIGHT SIDE -->
     <div class="right">
       <div class="right-inner">
 
@@ -115,6 +124,6 @@
 
   <div id="toast" class="toast-container"></div>
 
-  <script src="../Scripts/register.js"></script>
+  <script src="../scripts/register.js"></script>
 </body>
 </html>
