@@ -9,10 +9,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vLogin = $_POST["pLogin"] ?? '';
     $vSenha = $_POST["pSenha"] ?? '';
 
+    if (empty(trim($vLogin)) || empty(trim($vSenha))) {
+        echo 0; 
+        exit; 
+    }
+
     $vSenhaHash = sha1($vSenha);
 
     $sql = "
-        SELECT senha 
+        SELECT usuario_id, senha 
         FROM tbUsuarios 
         WHERE login = ? 
         LIMIT 1
@@ -21,7 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql_login = $conexao->prepare($sql);
     $sql_login->bind_param("s", $vLogin);
     $sql_login->execute();
-    $sql_login->bind_result($senhaBanco);
+    
+    $sql_login->bind_result($vIdBanco, $senhaBanco);
 
     if ($sql_login->fetch()) {
         if ($vSenhaHash === $senhaBanco) {
@@ -29,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             $_SESSION['logado'] = true;
             $_SESSION['usuario_login'] = $vLogin;
+            $_SESSION['usuario_id'] = $vIdBanco;
         }
     }
 

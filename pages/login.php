@@ -88,7 +88,7 @@
 
         <p class="register">
           Não tem uma conta?
-          <a href="register.php" class="link">Criar conta</a>
+          <a href="usuario_incluir.php" class="link">Criar conta</a>
         </p>
       </div>
     </main>

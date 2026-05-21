@@ -58,32 +58,27 @@ document.getElementById("registerForm").addEventListener("submit", (e) => {
 
     $.ajax({
         type: 'POST',
-        url: '../scripts/usuario_inserir.php',
+        url: '../scripts/acao_incluir.php', 
+        dataType: 'json', 
         data: {
             pNome: name,
             pEmail: email,
             pSenha: password
         },
         success: function(data) {
-            let vRetorno = data.replace(/[\[\]]/g, '').trim();
-            
-            if (vRetorno === "1") {
-                showToast("Conta criada com sucesso!");
+            if (data.status === "success") {
+                showToast(data.message); 
                 setTimeout(() => {
-                    window.location.href = "login.php";
+                    window.location.href = "login.php"; 
                 }, 1500);
-            } else if (vRetorno === "2") {
-                showToast("Este e-mail já está cadastrado!", true);
-                submitBtn.textContent = "Criar conta";
-                submitBtn.removeAttribute('disabled');
             } else {
-                showToast("Erro ao criar conta. Tente novamente.", true);
+                showToast(data.message, true);
                 submitBtn.textContent = "Criar conta";
                 submitBtn.removeAttribute('disabled');
             }
         },
-        error: function(xhr, status, error) {
-            console.error(error);
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Erro na requisição: " + textStatus + " = " + errorThrown);
             showToast("Erro no servidor.", true);
             submitBtn.textContent = "Criar conta";
             submitBtn.removeAttribute('disabled');
