@@ -1,9 +1,11 @@
+<?php
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PerformanceHub — Plataforma de Gestão de Desempenho</title>
+    <title>PerformanceHub — Plataforma de Gestao de Desempenho</title>
     <link rel="stylesheet" href="styles/index.css" />
 </head>
 <body>
@@ -14,7 +16,7 @@
                 <span class="logo-text">PerformanceHub</span>
             </div>
             <nav class="nav-links">
-                <a href="#sobre">Sobre Nós</a>
+                <a href="#sobre">Sobre Nos</a>
                 <a href="#faq">FAQ</a>
                 <a href="pages/login.php" class="btn-outline">Entrar</a>
             </nav>
@@ -25,14 +27,14 @@
         <section class="hero">
             <div class="container hero-content">
                 <div class="hero-text">
-                    <h1>Eleve o desempenho da sua equipe ao próximo nível</h1>
-                    <p>Acompanhe metas, realize avaliações 360° e ofereça feedbacks contínuos em uma plataforma centralizada, intuitiva e baseada em dados.</p>
+                    <h1>Eleve o desempenho da sua equipe ao proximo nivel</h1>
+                    <p>Acompanhe metas, realize avaliacoes 360° e ofereca feedbacks continuos em uma plataforma centralizada, intuitiva e baseada em dados.</p>
                     <div class="hero-actions">
                         <a href="pages/login.php" class="btn-primary">Acessar o Sistema</a>
                     </div>
                 </div>
                 <div class="hero-image">
-                    <img src="assets/equipe-colabore.avif" alt="Equipe colaborando e analisando dados de desempenho em um escritório" />
+                    <img src="assets/equipe-colabore.avif" alt="Equipe colaborando e analisando dados de desempenho em um escritorio" />
                 </div>
             </div>
         </section>
@@ -43,15 +45,15 @@
                 <div class="about-grid">
                     <div class="about-card">
                         <h3>O que fazemos?</h3>
-                        <p>Substituímos planilhas complexas por um sistema inteligente onde gestores e colaboradores acompanham métricas, OKRs e KPIs em tempo real.</p>
+                        <p>Substituimos planilhas complexas por um sistema inteligente onde gestores e colaboradores acompanham metricas, OKRs e KPIs em tempo real.</p>
                     </div>
                     <div class="about-card">
-                        <h3>Nossa Missão</h3>
-                        <p>Nossa missão é transformar a cultura de feedback nas empresas, tornando o processo de avaliação mais justo, transparente e focado no desenvolvimento contínuo.</p>
+                        <h3>Nossa Missao</h3>
+                        <p>Nossa missao e transformar a cultura de feedback nas empresas, tornando o processo de avaliacao mais justo, transparente e focado no desenvolvimento continuo.</p>
                     </div>
                     <div class="about-card">
-                        <h3>Para quem é?</h3>
-                        <p>Ideal para equipes de RH, Business Partners, líderes e gestores que desejam engajar seus times e reter talentos com base em reconhecimento real.</p>
+                        <h3>Para quem e?</h3>
+                        <p>Ideal para equipes de RH, Business Partners, lideres e gestores que desejam engajar seus times e reter talentos com base em reconhecimento real.</p>
                     </div>
                 </div>
             </div>
@@ -62,16 +64,16 @@
                 <h2 class="section-title">Perguntas Frequentes (FAQ)</h2>
                 <div class="faq-list">
                     <div class="faq-item">
-                        <h4>Como funcionam os ciclos de avaliação?</h4>
-                        <p>O Administrador ou RH pode configurar ciclos periódicos (mensais, semestrais ou anuais), onde metas são alinhadas e avaliadas através de check-ins e feedbacks contínuos.</p>
+                        <h4>Como funcionam os ciclos de avaliacao?</h4>
+                        <p>O Administrador ou RH pode configurar ciclos periodicos (mensais, semestrais ou anuais), onde metas sao alinhadas e avaliadas atraves de check-ins e feedbacks continuos.</p>
                     </div>
                     <div class="faq-item">
-                        <h4>O sistema suporta avaliação 360°?</h4>
-                        <p>Sim. Além da autoavaliação e da avaliação do gestor direto, o sistema permite a coleta de feedbacks de pares (avaliadores cruzados) para uma visão completa do colaborador.</p>
+                        <h4>O sistema suporta avaliacao 360°?</h4>
+                        <p>Sim. Alem da autoavaliacao e da avaliacao do gestor direto, o sistema permite a coleta de feedbacks de pares (avaliadores cruzados) para uma visao completa do colaborador.</p>
                     </div>
                     <div class="faq-item">
-                        <h4>Como os PDIs são estruturados?</h4>
-                        <p>Após a calibração das notas, o gestor e o colaborador podem utilizar os dados da avaliação para gerar um Plano de Desenvolvimento Individual com prazos e ações específicas.</p>
+                        <h4>Como os PDIs sao estruturados?</h4>
+                        <p>Apos a calibracao das notas, o gestor e o colaborador podem utilizar os dados da avaliacao para gerar um Plano de Desenvolvimento Individual com prazos e acoes especificas.</p>
                     </div>
                 </div>
             </div>
@@ -85,7 +87,7 @@
                 <span>PerformanceHub</span>
             </div>
             <div class="footer-links">
-                <a href="#sobre">Sobre Nós</a>
+                <a href="#sobre">Sobre Nos</a>
                 <a href="#faq">FAQ</a>
                 <a href="pages/login.php">Login</a>
             </div>

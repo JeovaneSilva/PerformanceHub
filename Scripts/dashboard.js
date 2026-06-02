@@ -1,48 +1,15 @@
 
-const mockEmployees = [
-  { id:'1', name:'Ana Silva', email:'ana.silva@empresa.com', position:'Desenvolvedora Senior', department:'Tecnologia', performanceScore:92 },
-  { id:'2', name:'Carlos Santos', email:'carlos.santos@empresa.com', position:'Gerente de Projetos', department:'Operações', performanceScore:88 },
-  { id:'3', name:'Maria Oliveira', email:'maria.oliveira@empresa.com', position:'Designer UX', department:'Design', performanceScore:85 },
-  { id:'4', name:'Pedro Costa', email:'pedro.costa@empresa.com', position:'Analista de RH', department:'Recursos Humanos', performanceScore:78 },
-  { id:'5', name:'Julia Ferreira', email:'julia.ferreira@empresa.com', position:'Coordenadora de Marketing', department:'Marketing', performanceScore:95 },
-];
+const db = window.dbDashboardData || {};
 
-const mockGoals = [
-  { id:'1', employeeId:'1', progress:75, status:'in_progress' },
-  { id:'2', employeeId:'1', progress:100, status:'completed' },
-  { id:'3', employeeId:'2', progress:60, status:'in_progress' },
-  { id:'4', employeeId:'3', progress:40, status:'in_progress' },
-  { id:'5', employeeId:'5', progress:100, status:'completed' },
-];
+const mockEmployees = Array.isArray(db.topPerformers) ? db.topPerformers : [];
+const mockGoals = Array.isArray(db.goals) ? db.goals : [];
+const mockEvaluations = Array.isArray(db.evaluations) ? db.evaluations : [];
+const mockFeedbacks = Array.isArray(db.feedbacks) ? db.feedbacks : [];
 
-const mockEvaluations = [
-  { id:'1', employeeId:'1', type:'quarterly', score:92, date:'2024-01-15', evaluatorName:'Roberto Mendes' },
-  { id:'2', employeeId:'2', type:'quarterly', score:88, date:'2024-01-20', evaluatorName:'Patricia Alves' },
-  { id:'3', employeeId:'3', type:'monthly', score:85, date:'2024-02-01', evaluatorName:'Roberto Mendes' },
-  { id:'4', employeeId:'5', type:'quarterly', score:95, date:'2024-01-25', evaluatorName:'Patricia Alves' },
-];
+const mockDashboardStats = db.stats || { totalEmployees:0, averagePerformance:0, goalsCompleted:0, pendingEvaluations:0 };
 
-const mockFeedbacks = [
-  { id:'1', employeeId:'1', authorName:'Carlos Santos', content:'Ana demonstrou excelente habilidade de mentoria', date:'2024-02-05' },
-  { id:'2', employeeId:'2', authorName:'Ana Silva', content:'Carlos poderia melhorar a clareza nas reuniões', date:'2024-02-03' },
-  { id:'3', employeeId:'3', authorName:'Julia Ferreira', content:'O novo design da landing page ficou incrível!', date:'2024-02-07' },
-  { id:'4', employeeId:'5', authorName:'Pedro Costa', content:'Julia organizou um excelente evento de team building.', date:'2024-02-10' },
-];
-
-const mockDashboardStats = { totalEmployees:5, averagePerformance:87.6, goalsCompleted:2, pendingEvaluations:3 };
-
-const performanceHistory = [
-  { month:'Set', score:82 }, { month:'Out', score:85 }, { month:'Nov', score:84 },
-  { month:'Dez', score:88 }, { month:'Jan', score:87 }, { month:'Fev', score:91 }
-];
-
-const departmentPerformance = [
-  { name:'Tecnologia', value:90 },
-  { name:'Design', value:85 },
-  { name:'Marketing', value:95 },
-  { name:'RH', value:78 },
-  { name:'Operações', value:88 },
-];
+const performanceHistory = Array.isArray(db.performanceHistory) ? db.performanceHistory : [];
+const departmentPerformance = Array.isArray(db.departmentPerformance) ? db.departmentPerformance : [];
 
 
 function $(sel){return document.querySelector(sel)}
@@ -200,10 +167,15 @@ function drawBarChart(containerId, data){
     svg.appendChild(bar);
 
     const val = document.createElementNS(svgNS,'text');
-    val.setAttribute('x', padding.left + Math.min(barW + 8, innerW - 10));
+    const isTiny = barW < 28;
+    const textX = isTiny
+      ? padding.left + barW + 10
+      : padding.left + Math.min(barW - 6, innerW - 6);
+    val.setAttribute('x', textX);
     val.setAttribute('y', y + 14);
     val.setAttribute('font-size','12');
-    val.setAttribute('fill','#0f1724');
+    val.setAttribute('text-anchor', isTiny ? 'start' : 'end');
+    val.setAttribute('fill', isTiny ? '#0f1724' : '#ffffff');
     val.textContent = d.value;
     svg.appendChild(val);
   });
@@ -224,12 +196,17 @@ function renderActivities(){
     ...mockFeedbacks.map(f => ({...f, kind:'feedback'}))
   ].sort((a,b)=> new Date(b.date) - new Date(a.date)).slice(0,6);
 
+  if (activities.length === 0) {
+    container.innerHTML = '<div style="color:#6b7280;font-size:13px;">Nenhuma atividade recente.</div>';
+    return;
+  }
+
   activities.forEach(act=>{
     const el = document.createElement('div');
     el.className = 'recent-item';
     el.innerHTML = `
       <div class="icon">${act.kind==='evaluation'?'🗂':'💬'}</div>
-      <div class="content">
+      <div class="activity-content">
         <div style="font-weight:600">${act.kind==='evaluation' ? 'Avaliação' : 'Novo Feedback'}</div>
         <div class="meta">${act.kind==='evaluation' ? `Score: ${act.score}` : act.content}</div>
       </div>
@@ -264,6 +241,9 @@ function renderPerformers(){
 
 function formatDate(d){
   const dt = new Date(d);
+  if (Number.isNaN(dt.getTime())) {
+    return '-';
+  }
   return dt.toLocaleDateString('pt-BR', { day:'2-digit', month:'short' });
 }
 

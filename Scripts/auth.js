@@ -106,7 +106,7 @@
         showToast('Login realizado com sucesso!', 'success');
         
         setTimeout(() => {
-          window.location.href = '../pages/dashboard.html';
+          window.location.href = '../pages/dashboard.php';
         }, 700);
       } else {
         showToast('Credenciais inválidas. Tente novamente.', 'error');

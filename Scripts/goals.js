@@ -1,9 +1,5 @@
 
-const employees = [
-  { id: "1", name: "João Santos" },
-  { id: "2", name: "Maria Oliveira" },
-  { id: "3", name: "Carlos Lima" }
-];
+const employees = Array.isArray(window.dbEmployees) ? window.dbEmployees : [];
 
 
 const employeeMap = employees.reduce((acc, e) => {
@@ -16,25 +12,45 @@ function getEmployeeName(id) {
   return employeeMap[id] || id;
 }
 
-let goals = [];
+let goals = Array.isArray(window.dbGoals) ? window.dbGoals : [];
 
 const modal = document.getElementById("modal");
 const openBtn = document.getElementById("openModal");
 const closeBtn = document.getElementById("closeModal");
+const modalTitle = document.getElementById("modalTitle");
+const saveBtn = document.getElementById("saveGoal");
 
-openBtn && (openBtn.onclick = () => {
- 
-  modal.style.display = "flex";
+let editingGoal = null;
+
+function resetGoalForm() {
   document.getElementById("employeeSelect").value = "";
   document.getElementById("goalTitle").value = "";
   document.getElementById("goalDesc").value = "";
   document.getElementById("goalDate").value = "";
-});
+}
 
-closeBtn && (closeBtn.onclick = () => modal.style.display = "none");
+function openCreateModal() {
+  editingGoal = null;
+  modalTitle.textContent = "Criar Nova Meta";
+  saveBtn.textContent = "Criar Meta";
+  resetGoalForm();
+  modal.classList.remove("hidden");
+}
 
+function openEditModal(goal) {
+  editingGoal = goal;
+  modalTitle.textContent = "Editar Meta";
+  saveBtn.textContent = "Salvar Alteracoes";
+  document.getElementById("employeeSelect").value = goal.employeeId ? String(goal.employeeId) : "";
+  document.getElementById("goalTitle").value = goal.title || "";
+  document.getElementById("goalDesc").value = goal.desc || "";
+  document.getElementById("goalDate").value = goal.date || "";
+  modal.classList.remove("hidden");
+}
 
-const saveBtn = document.getElementById("saveGoal");
+openBtn && (openBtn.onclick = openCreateModal);
+
+closeBtn && (closeBtn.onclick = () => modal.classList.add("hidden"));
 saveBtn && (saveBtn.onclick = () => {
   const employeeId = document.getElementById("employeeSelect").value;
   const title = document.getElementById("goalTitle").value.trim();
@@ -46,18 +62,34 @@ saveBtn && (saveBtn.onclick = () => {
     return;
   }
 
-  goals.push({
-    id: Date.now(),
-    employeeId,     
-    title,
-    desc,
-    date,
-    progress: 0,
-    status: "pending"
-  });
+  const formData = new FormData();
+  formData.append("pFuncionarioId", employeeId);
+  formData.append("pTitulo", title);
+  formData.append("pDescricao", desc);
+  formData.append("pDataLimite", date);
+  formData.append("pStatus", editingGoal ? (editingGoal.status || "pendente") : "pendente");
+  formData.append("pProgresso", editingGoal ? String(editingGoal.progress ?? 0) : "0");
 
-  modal.style.display = "none";
-  renderGoals(currentFilter); 
+  if (editingGoal) {
+    formData.append("pId", editingGoal.id);
+  }
+
+  const endpoint = editingGoal ? "../scripts/acao_editar_meta.php" : "../scripts/acao_incluir_meta.php";
+
+  fetch(endpoint, {
+    method: "POST",
+    body: formData
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.status === "success") {
+        modal.classList.add("hidden");
+        window.location.reload();
+      } else {
+        alert(data.message || "Erro ao salvar");
+      }
+    })
+    .catch(() => alert("Erro na requisicao"));
 });
 
 
@@ -92,10 +124,10 @@ function renderGoals(filter = "all") {
 
     const employeeName = getEmployeeName(goal.employeeId);
 
-    const statusLabel = goal.status === "pending" ? "Pendente"
-                      : goal.status === "in_progress" ? "Em andamento"
-                      : goal.status === "completed" ? "Concluída"
-                      : goal.status === "cancelled" ? "Cancelada"
+    const statusLabel = goal.status === "pendente" ? "Pendente"
+              : goal.status === "em_andamento" ? "Em andamento"
+              : goal.status === "concluida" ? "Concluida"
+              : goal.status === "cancelada" ? "Cancelada"
                       : goal.status;
 
     card.innerHTML = `
@@ -122,6 +154,11 @@ function renderGoals(filter = "all") {
         <button data-id="${goal.id}" data-value="75">75%</button>
         <button data-id="${goal.id}" data-value="100">100%</button>
       </div>
+
+      <div class="card-actions">
+        <button class="btn-secondary btn-small" data-action="edit" data-id="${goal.id}">Editar</button>
+        <button class="btn-danger btn-small" data-action="delete" data-id="${goal.id}">Excluir</button>
+      </div>
     `;
 
     container.appendChild(card);
@@ -139,14 +176,35 @@ function renderGoals(filter = "all") {
 
 
 function updateProgress(id, value) {
-  goals = goals.map(g => {
-    if (g.id === id) {
-      g.progress = value;
-      g.status = value === 100 ? "completed" : (value > 0 ? "in_progress" : "pending");
-    }
-    return g;
-  });
-  renderGoals(currentFilter);
+  const goal = goals.find(g => g.id === id);
+  if (!goal) return;
+
+  const newStatus = value === 100 ? "concluida" : (value > 0 ? "em_andamento" : "pendente");
+
+  const formData = new FormData();
+  formData.append("pId", goal.id);
+  formData.append("pFuncionarioId", goal.employeeId);
+  formData.append("pTitulo", goal.title || "");
+  formData.append("pDescricao", goal.desc || "");
+  formData.append("pDataLimite", goal.date || "");
+  formData.append("pStatus", newStatus);
+  formData.append("pProgresso", String(value));
+
+  fetch("../scripts/acao_editar_meta.php", {
+    method: "POST",
+    body: formData
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.status === "success") {
+        goal.progress = value;
+        goal.status = newStatus;
+        renderGoals(currentFilter);
+      } else {
+        alert(data.message || "Erro ao atualizar");
+      }
+    })
+    .catch(() => alert("Erro na requisicao"));
 }
 
 
@@ -160,37 +218,48 @@ document.querySelectorAll(".filter-btn").forEach(btn => {
 });
 
 
-goals = [
-  {
-    id: 1,
-    employeeId: "1",
-    title: "Implementar sistema de autenticação",
-    desc: "OAuth2 + refresh tokens",
-    date: "2024-02-28",
-    progress: 75,
-    status: "in_progress"
-  },
-  {
-    id: 2,
-    employeeId: "2",
-    title: "Redesign do aplicativo mobile",
-    desc: "Acessibilidade e performance",
-    date: "2024-04-15",
-    progress: 40,
-    status: "pending"
-  },
-  {
-    id: 3,
-    employeeId: "3",
-    title: "Campanha de lançamento Q1",
-    desc: "Planejar e executar campanha",
-    date: "2024-02-15",
-    progress: 100,
-    status: "completed"
-  }
-];
-
 renderGoals();
+
+container.addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-action]");
+  if (!btn) return;
+
+  const id = Number(btn.dataset.id);
+  const goal = goals.find((item) => Number(item.id) === id);
+  if (!goal) return;
+
+  if (btn.dataset.action === "edit") {
+    openEditModal(goal);
+    return;
+  }
+
+  if (btn.dataset.action === "delete") {
+    deleteGoal(id);
+  }
+});
+
+function deleteGoal(id) {
+  if (!confirm("Deseja excluir esta meta?")) {
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("pId", id);
+
+  fetch("../scripts/acao_excluir_meta.php", {
+    method: "POST",
+    body: formData
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.status === "success") {
+        window.location.reload();
+      } else {
+        alert(data.message || "Erro ao excluir");
+      }
+    })
+    .catch(() => alert("Erro na requisicao"));
+}
 
 
 function escapeHtml(str) {

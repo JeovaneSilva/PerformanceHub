@@ -1,0 +1,110 @@
+:root {
+    --ui-bg: #f4f7fa;
+    --ui-card: #ffffff;
+    --ui-border: #d1d5db;
+    --ui-muted: #6b7280;
+    --ui-primary-start: #0284c7;
+    --ui-primary-end: #0ea5e9;
+    --ui-secondary: #e2e8f0;
+    --ui-radius: 10px;
+    --ui-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.content {
+    flex: 1;
+    margin-left: 260px;
+    padding: 28px 36px;
+    background: var(--ui-bg);
+    min-height: 100vh;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.page-title {
+    font-size: 22px;
+    margin: 0;
+    color: #111827;
+}
+
+.page-sub {
+    color: var(--ui-muted);
+    margin-top: 6px;
+    font-size: 13px;
+}
+
+.btn-primary {
+    padding: 12px 20px;
+    background: linear-gradient(90deg, var(--ui-primary-start), var(--ui-primary-end));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-secondary {
+    background: var(--ui-secondary);
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-small {
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 6px;
+}
+
+.btn-danger {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: var(--ui-card);
+    padding: 24px;
+    width: 420px;
+    max-width: calc(100% - 40px);
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    box-shadow: var(--ui-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--ui-border);
+    font-size: 14px;
+}
+
+.hidden {
+    display: none !important;
+}

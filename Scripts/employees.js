@@ -1,27 +1,12 @@
-let employees = [
-    {
-        id: "1",
-        name: "Ana Silva",
-        email: "ana.silva@empresa.com",
-        position: "Desenvolvedora Senior",
-        department: "Tecnologia",
-        hireDate: "2022-03-14",
-        performanceScore: 92
-    },
-    {
-        id: "2",
-        name: "Carlos Santos",
-        email: "carlos.santos@empresa.com",
-        position: "Gerente de Projetos",
-        department: "Operações",
-        hireDate: "2021-08-19",
-        performanceScore: 88
-    }
-];
+let employees = Array.isArray(window.dbEmployees) ? window.dbEmployees : [];
 
 const grid = document.getElementById("employeesGrid");
 const searchInput = document.getElementById("searchInput");
 const emptyState = document.getElementById("emptyState");
+const modalTitle = document.getElementById("modalTitle");
+const empIdInput = document.getElementById("empId");
+
+let editingEmployee = null;
 
 function renderEmployees() {
     grid.innerHTML = "";
@@ -41,7 +26,7 @@ function renderEmployees() {
     }
 
     filtered.forEach(emp => {
-        const initials = emp.name.split(" ").map(n => n[0]).join("").slice(0,2);
+        const initials = emp.name.split(" ").map(n => n[0]).join("").slice(0, 2);
 
         let scoreClass =
             emp.performanceScore >= 90 ? "green" :
@@ -70,6 +55,12 @@ function renderEmployees() {
                         <div class="progress-fill" style="width: ${emp.performanceScore}%"></div>
                     </div>
                 </div>
+
+                <div class="card-actions">
+                    <button class="btn-secondary btn-small" data-action="report" data-id="${emp.id}">Gerar PDF</button>
+                    <button class="btn-secondary btn-small" data-action="edit" data-id="${emp.id}">Editar</button>
+                    <button class="btn-danger btn-small" data-action="delete" data-id="${emp.id}">Excluir</button>
+                </div>
             </div>
         `;
     });
@@ -83,31 +74,144 @@ const openModal = document.getElementById("openModal");
 const closeModal = document.getElementById("closeModal");
 const saveEmployee = document.getElementById("saveEmployee");
 
-openModal.onclick = () => modal.classList.remove("hidden");
+function resetEmployeeForm() {
+    empIdInput.value = "";
+    document.getElementById("empName").value = "";
+    document.getElementById("empEmail").value = "";
+    document.getElementById("empCpf").value = "";
+    document.getElementById("empBirth").value = "";
+    document.getElementById("empPhone").value = "";
+    document.getElementById("empPosition").value = "";
+    document.getElementById("empDepartment").value = "";
+    document.getElementById("empHireDate").value = "";
+    document.getElementById("empPerformance").value = "0";
+}
+
+function openCreateModal() {
+    editingEmployee = null;
+    modalTitle.textContent = "Adicionar Funcionario";
+    saveEmployee.textContent = "Adicionar";
+    resetEmployeeForm();
+    modal.classList.remove("hidden");
+}
+
+function openEditModal(emp) {
+    editingEmployee = emp;
+    empIdInput.value = emp.id;
+    modalTitle.textContent = "Editar Funcionario";
+    saveEmployee.textContent = "Salvar Alteracoes";
+    document.getElementById("empName").value = emp.name || "";
+    document.getElementById("empEmail").value = emp.email || "";
+    document.getElementById("empCpf").value = emp.cpf || "";
+    document.getElementById("empBirth").value = emp.birth || "";
+    document.getElementById("empPhone").value = emp.phone || "";
+    document.getElementById("empPosition").value = emp.position || "";
+    document.getElementById("empDepartment").value = emp.department || "";
+    document.getElementById("empHireDate").value = emp.hireDate || "";
+    document.getElementById("empPerformance").value = typeof emp.performanceScore === "number" ? String(emp.performanceScore) : "0";
+    modal.classList.remove("hidden");
+}
+
+openModal.onclick = openCreateModal;
 closeModal.onclick = () => modal.classList.add("hidden");
+
+grid.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-action]");
+    if (!btn) return;
+    const id = Number(btn.dataset.id);
+    const emp = employees.find((item) => Number(item.id) === id);
+    if (!emp) return;
+
+    if (btn.dataset.action === "edit") {
+        openEditModal(emp);
+        return;
+    }
+
+    if (btn.dataset.action === "delete") {
+        deleteEmployee(id);
+        return;
+    }
+
+    if (btn.dataset.action === "report") {
+        openEmployeeReport(id);
+    }
+});
+
+
+function openEmployeeReport(id) {
+    window.open(`../scripts/relatorio_pdf.php?id=${id}`, "_blank");
+}
+
+function deleteEmployee(id) {
+    if (!confirm("Deseja excluir este funcionario?")) {
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("pId", id);
+
+    fetch("../scripts/acao_excluir_pessoa.php", {
+        method: "POST",
+        body: formData
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.status === "success") {
+                window.location.reload();
+            } else {
+                alert(data.message || "Erro ao excluir");
+            }
+        })
+        .catch(() => alert("Erro na requisicao"));
+}
 
 saveEmployee.onclick = () => {
     const name = document.getElementById("empName").value;
     const email = document.getElementById("empEmail").value;
+    const cpf = document.getElementById("empCpf").value;
+    const birth = document.getElementById("empBirth").value;
+    const phone = document.getElementById("empPhone").value;
     const position = document.getElementById("empPosition").value;
     const department = document.getElementById("empDepartment").value;
     const hireDate = document.getElementById("empHireDate").value;
+    const performance = document.getElementById("empPerformance").value;
 
-    if (!name || !email || !position || !department || !hireDate) {
+    if (!name || !email || !cpf || !birth || !phone || !position || !department || !hireDate) {
         alert("Preencha todos os campos!");
         return;
     }
 
-    employees.push({
-        id: Date.now(),
-        name,
-        email,
-        position,
-        department,
-        hireDate,
-        performanceScore: Math.floor(Math.random() * 40) + 60
-    });
+    const formData = new FormData();
+    const personTypeId = editingEmployee && editingEmployee.personTypeId ? editingEmployee.personTypeId : "1";
+    formData.append("pNome", name);
+    formData.append("pCpf", cpf);
+    formData.append("pNascimento", birth);
+    formData.append("pTelefone", phone);
+    formData.append("pPessoaTipoId", personTypeId);
+    formData.append("pEmail", email);
+    formData.append("pCargo", position);
+    formData.append("pDepartamento", department);
+    formData.append("pDataAdmissao", hireDate);
+    formData.append("pPerformanceScore", performance || "0");
 
-    modal.classList.add("hidden");
-    renderEmployees();
+    if (editingEmployee) {
+        formData.append("pId", editingEmployee.id);
+    }
+
+    const endpoint = editingEmployee ? "../scripts/acao_editar_pessoa.php" : "../scripts/acao_incluir_pessoa.php";
+
+    fetch(endpoint, {
+        method: "POST",
+        body: formData
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.status === "success") {
+                modal.classList.add("hidden");
+                window.location.reload();
+            } else {
+                alert(data.message || "Erro ao salvar");
+            }
+        })
+        .catch(() => alert("Erro na requisicao"));
 };

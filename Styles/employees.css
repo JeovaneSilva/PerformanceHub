@@ -163,7 +163,10 @@ body {
     background: white;
     padding: 25px;
     border-radius: 12px;
-    width: 380px;
+    width: 600px;
+    max-width: calc(100% - 40px);
+    max-height: 90vh;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;

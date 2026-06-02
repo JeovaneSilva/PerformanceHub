@@ -1,0 +1,96 @@
+<?php
+session_start();
+
+header('Content-Type: application/json; charset=utf-8');
+require_once '../inc/conexao.php';
+
+$retorno = [
+    'status' => 'error',
+    'message' => 'Erro desconhecido'
+];
+
+try {
+    if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        throw new Exception("Metodo invalido");
+    }
+
+    $meta_id = trim($_POST['pId'] ?? '');
+    $funcionario_id = trim($_POST['pFuncionarioId'] ?? '');
+    $titulo = trim($_POST['pTitulo'] ?? '');
+    $descricao = trim($_POST['pDescricao'] ?? '');
+    $data_limite = trim($_POST['pDataLimite'] ?? '');
+    $status = trim($_POST['pStatus'] ?? 'pendente');
+    $progresso = trim($_POST['pProgresso'] ?? '0');
+
+    if ($meta_id == '' || !is_numeric($meta_id)) {
+        throw new Exception("Meta invalida.");
+    }
+    if ($funcionario_id == '' || $titulo == '' || $data_limite == '') {
+        throw new Exception("Preencha os campos obrigatorios.");
+    }
+    if (!is_numeric($funcionario_id)) {
+        throw new Exception("Funcionario invalido.");
+    }
+
+    $progresso_int = is_numeric($progresso) ? (int)$progresso : 0;
+    if ($progresso_int < 0) $progresso_int = 0;
+    if ($progresso_int > 100) $progresso_int = 100;
+
+    if ($status == '') {
+        $status = 'pendente';
+    }
+
+    date_default_timezone_set('America/Fortaleza');
+    $data_atual = date("Y-m-d H:i:s");
+    $atualizado_por = $_SESSION['usuario_id'] ?? 1;
+
+    $sql = "
+        UPDATE tbMetas
+        SET funcionario_id = ?, titulo = ?, descricao = ?, data_limite = ?, status = ?, progresso = ?, atualizado_em = ?, atualizado_por = ?
+        WHERE meta_id = ?
+    ";
+
+    $stmt = $conexao->prepare($sql);
+    if (!$stmt) {
+        throw new Exception("Erro no prepare: " . $conexao->error);
+    }
+
+    $funcionario_id_int = (int)$funcionario_id;
+    $atualizado_por_int = (int)$atualizado_por;
+    $meta_id_int = (int)$meta_id;
+
+    $stmt->bind_param(
+        "issssisii",
+        $funcionario_id_int,
+        $titulo,
+        $descricao,
+        $data_limite,
+        $status,
+        $progresso_int,
+        $data_atual,
+        $atualizado_por_int,
+        $meta_id_int
+    );
+
+    if ($stmt->execute()) {
+        $retorno = [
+            'status' => 'success',
+            'message' => 'Meta atualizada com sucesso!'
+        ];
+    } else {
+        throw new Exception("Erro ao gravar: " . $stmt->error);
+    }
+
+    $stmt->close();
+    $conexao->close();
+
+} catch (Throwable $e) {
+    $retorno = [
+        'status' => 'error',
+        'message' => $e->getMessage()
+    ];
+}
+
+echo json_encode($retorno);
+exit;
+?>

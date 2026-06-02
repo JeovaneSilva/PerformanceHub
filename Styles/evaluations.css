@@ -141,7 +141,7 @@ body {
 
 /* Modal */
 .modal {
-    display: none;
+    display: flex;
     position: fixed;
     z-index: 99;
     inset: 0;

@@ -157,7 +157,7 @@ body {
 
 .recent-item .icon {
     width: 40px;
-    height: 40;
+    height: 40px;
     border-radius: 8px;
     background: #eff8f3;
     display: flex;
@@ -165,7 +165,7 @@ body {
     justify-content: center
 }
 
-.recent-item .content {
+.recent-item .activity-content {
     flex: 1
 }
 
@@ -185,7 +185,7 @@ body {
 
 .performer .rank {
     width: 32px;
-    height: 32;
+    height: 32px;
     border-radius: 8px;
     background: #ffedd5;
     display: flex;
@@ -196,7 +196,7 @@ body {
 
 .performer .avatar {
     width: 36px;
-    height: 36;
+    height: 36px;
     border-radius: 50%;
     background: linear-gradient(135deg, #006a9e, #0084c7);
     color: #fff;

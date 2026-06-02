@@ -14,6 +14,7 @@ require_once '../inc/conexao.php';
     <title>Savir Sistemas - Usuários</title>
     <link rel="stylesheet" href="../styles/employees.css" />
     <link rel="stylesheet" href="../styles/sideBar.css" />
+    <link rel="stylesheet" href="../styles/ui.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script>
@@ -89,12 +90,12 @@ require_once '../inc/conexao.php';
             </div>
         </div>
         <nav class="nav">
-            <a href="dashboard.html" class="nav-item">Dashboard</a>
-            <a href="employees.html"class="nav-item">Funcionários</a>
-            <a href="usuario_listar.php" class="nav-item active">Usuários do Sistema</a> 
-            <a href="goals.html" class="nav-item ">Metas</a>
-            <a href="evaluations.html" class="nav-item">Avaliações</a>
-            <a href="feedbacks.html" class="nav-item">Feedbacks</a>
+            <a href="dashboard.php" class="nav-item">Dashboard</a>
+            <a href="employees.php" class="nav-item ">Funcionarios</a>
+            <a href="usuario_listar.php" class="nav-item active">Usuarios do Sistema</a>
+            <a href="goals.php" class="nav-item">Metas</a>
+            <a href="evaluations.php" class="nav-item">Avaliacoes</a>
+            <a href="feedbacks.php" class="nav-item">Feedbacks</a>
         </nav>
         <div class="sidebar-bottom">
             <div class="user">
